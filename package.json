@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@commitlint/cli": "^9.1.2",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -15,7 +16,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "commit": "git-cz"
+    "cz": "git-cz"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -33,16 +34,12 @@
     ]
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^3.2.0"
+    "cz-conventional-changelog": "^3.2.0",
+    "husky": "^4.2.5"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "husky": {
-    "hooks": {
-      "prepare-commit-msg": "exec < /dev/tty && git cz --hook || true"
     }
   }
 }
