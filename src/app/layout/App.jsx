@@ -1,12 +1,25 @@
 import React, { Fragment } from 'react';
-import { Route, withRouter } from 'react-router-dom';
+import { Route, withRouter, Switch } from 'react-router-dom';
 import HomePage from '../../features/home/HomePage';
+import NavBar from '../../features/nav/NavBar';
 
 const App = ({ location }) => {
     return (
-        <Fragment>
-            <Route exact path="/" component={HomePage} />
-        </Fragment>
+        <div className="container-fluid p-3 px-md-4">
+            <Route
+                // path={'/(.+)'}
+                render={() => (
+                    <Fragment>
+                        <NavBar />
+                        <div>
+                            <Switch>
+                                <Route exact path="/" component={HomePage} />
+                            </Switch>
+                        </div>
+                    </Fragment>
+                )}
+            />
+        </div>
     );
 };
 
