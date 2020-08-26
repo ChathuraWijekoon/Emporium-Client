@@ -5,7 +5,8 @@ import NavBar from '../../features/nav/NavBar';
 
 const App = ({ location }) => {
     return (
-        <div className="container-fluid p-3 px-md-4">
+        // <div className="container-fluid p-3 px-md-4">
+        <>
             <Route
                 // path={'/(.+)'}
                 render={() => (
@@ -19,7 +20,8 @@ const App = ({ location }) => {
                     </Fragment>
                 )}
             />
-        </div>
+            {/* </div> */}
+        </>
     );
 };
 
