@@ -8,7 +8,7 @@ import { createBrowserHistory } from 'history';
 import App from './app/layout/App';
 
 // styles
-import './app/layout/styles.css';
+import './app/layout/styles.scss';
 
 // service worker
 import * as serviceWorker from './serviceWorker';
