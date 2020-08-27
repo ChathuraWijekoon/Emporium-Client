@@ -2,6 +2,8 @@ import React, { Fragment } from 'react';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import HomePage from '../../features/home/HomePage';
 import NavBar from '../../features/nav/NavBar';
+import RegisterForm from '../../features/user/RegisterForm';
+import LoginForm from '../../features/user/LoginForm'
 
 const App = ({ location }) => {
     return (
@@ -15,6 +17,8 @@ const App = ({ location }) => {
                         <div>
                             <Switch>
                                 <Route exact path="/" component={HomePage} />
+                                <Route exact path="/register" component={RegisterForm}/>
+                                <Route exact path="/login" component={LoginForm}/>
                             </Switch>
                         </div>
                     </Fragment>

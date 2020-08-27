@@ -74,8 +74,8 @@ const NavBar = () => {
                                         <div className="text">
                                             <span className="text-muted">Welcome!</span>
                                             <div>
-                                                <a className="nav-link auth-links">Sign in</a> |
-                                                <a className="nav-link auth-links"> Register</a>
+                                                <a className="nav-link auth-links" href="/login">Sign in</a> |
+                                                <a className="nav-link auth-links" href="/register"> Register</a>
                                             </div>
                                         </div>
                                     </div>
