@@ -1,6 +1,7 @@
-import React from 'react'
-import { Form } from 'react-bootstrap'
-import { Button } from 'react-bootstrap'
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import React from 'react';
+import { Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 const LoginForm = () => {
     return (
@@ -33,6 +34,6 @@ const LoginForm = () => {
             </div>
         </div>
     );
-}
+};
 
 export default LoginForm;

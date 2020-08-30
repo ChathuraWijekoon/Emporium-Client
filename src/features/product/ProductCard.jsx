@@ -1,11 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 // modules
 import React from 'react';
+import { observer } from 'mobx-react-lite';
+
+// utils
+import { formatCurrency } from '../../app/common/util/util';
 
 // assets
 import imgShirt from '../../assets/images/products/shirt.jpg';
 
-const ProductCard = () => {
+const ProductCard = ({ product }) => {
     return (
         <div href="#" className="card card-product-grid">
             <a href="#" className="img-wrap">
@@ -14,7 +18,7 @@ const ProductCard = () => {
             </a>
             <figcaption className="info-wrap">
                 <a href="#" className="title">
-                    Just another product name
+                    {product.name}
                 </a>
 
                 <div className="rating-wrap">
@@ -36,10 +40,10 @@ const ProductCard = () => {
                     </ul>
                     <span className="label-rating text-muted"> 34 reviws</span>
                 </div>
-                <div className="price mt-1">$179.00</div>
+                <div className="price mt-1">{formatCurrency(product.unitPrice)}</div>
             </figcaption>
         </div>
     );
 };
 
-export default ProductCard;
+export default observer(ProductCard);
