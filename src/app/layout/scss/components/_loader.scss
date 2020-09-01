@@ -1,0 +1,21 @@
+.loader {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0px;
+    top: 0px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 00.9);
+    z-index: 10;
+
+    .loader-text {
+        color: white;
+        padding: 0;
+        margin: 0;
+        margin-top: 0.5rem;
+        font-size: 1rem;
+    }
+}
