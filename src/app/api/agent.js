@@ -25,7 +25,7 @@ axios.interceptors.response.use(undefined, (error) => {
     }
     if (status === 401) {
         window.localStorage.removeItem('jwt');
-        history.push('/');
+        history.push('/login');
         toast.info('Your session has expired, please login again');
     }
     if (status === 400 && config.method === 'get' && data.errors.hasOwnProperty('id')) {
@@ -55,11 +55,18 @@ const requests = {
     },
 };
 
+const User = {
+    current: () => requests.get('/auth/me'),
+    login: (user) => requests.post(`/auth/login`, user),
+    register: (user) => requests.post(`/auth/register`, user),
+};
+
 const Products = {
     list: (params) => axios.get('/products', { params: params }).then(responseBody),
     details: (id) => requests.get(`/products/${id}`),
 };
 
 export default {
+    User,
     Products,
 };
