@@ -1,6 +1,10 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
+
+// state
+import { RootStoreContext } from '../../app/stores/rootStore';
 
 // components
 import NavBarForm from './NavBarForm';
@@ -10,6 +14,9 @@ import NavBarCategory from './NavBarCategory';
 import imgLogo from '../../assets/images/logo/emporium-logo-resize.png';
 
 const NavBar = () => {
+    const rootStore = useContext(RootStoreContext);
+    const { user, logout } = rootStore.userStore;
+
     const handleFormSubmit = (e) => {
         e.preventDefault();
         console.log('ssss');
@@ -52,9 +59,9 @@ const NavBar = () => {
                     <div className="container">
                         <div className="row align-items-center">
                             <div className="col-lg-2 col-6">
-                                <a href="/" className="brand-wrap">
+                                <Link to="/" className="brand-wrap">
                                     <img className="logo" src={imgLogo} alt="logo" />
-                                </a>
+                                </Link>
                             </div>
                             <div className="col-lg-6 col-12 col-sm-12">
                                 <NavBarForm handleFormSubmit={handleFormSubmit} />
@@ -72,11 +79,26 @@ const NavBar = () => {
                                             <i className="fa fa-user"></i>
                                         </a>
                                         <div className="text">
-                                            <span className="text-muted">Welcome!</span>
-                                            <div>
-                                                <a className="nav-link auth-links" href="/login">Sign in</a> |
-                                                <a className="nav-link auth-links" href="/register"> Register</a>
-                                            </div>
+                                            <span className="text-muted">Welcome {user ? user.name : '!'}</span>
+                                            {!user ? (
+                                                <div>
+                                                    <Link className="nav-link auth-links" to="/login">
+                                                        Sign in
+                                                    </Link>{' '}
+                                                    |
+                                                    <Link className="nav-link auth-links" to="/register">
+                                                        {' '}
+                                                        Register
+                                                    </Link>
+                                                </div>
+                                            ) : (
+                                                <div>
+                                                    <a className="nav-link auth-links" role="button" onClick={logout}>
+                                                        {' '}
+                                                        Logout
+                                                    </a>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
@@ -90,4 +112,4 @@ const NavBar = () => {
     );
 };
 
-export default NavBar;
+export default observer(NavBar);

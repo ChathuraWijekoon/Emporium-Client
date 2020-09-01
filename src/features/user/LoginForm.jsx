@@ -1,38 +1,84 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react';
+// modules
+import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
+import { toast } from 'react-toastify';
+
+// state
+import { RootStoreContext } from '../../app/stores/rootStore';
 
 const LoginForm = () => {
+    const rootStore = useContext(RootStoreContext);
+    const { login } = rootStore.userStore;
+
+    const [formData, _setFormData] = useState({
+        email: '',
+        password: '',
+    });
+
     return (
-        <div className="section">
-            <div className="container">
-                <Form>
-                    <h3 class="my-3">Sign In</h3>
+        <section className="section-content padding-y" style={{ minHeight: '84vh' }}>
+            <div className="card mx-auto" style={{ maxWidth: 380, marginTop: 50 }}>
+                <div className="card-body">
+                    <h4 className="card-title mb-4">Sign in</h4>
+                    <Form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            login(formData).catch((error) => {
+                                if (error.data) {
+                                    toast.error(error.data.error);
+                                }
+                            });
+                        }}
+                    >
+                        <a href="#" className="btn btn-facebook btn-block mb-2">
+                            <i className="fab fa-facebook-f"></i> Sign in with Facebook
+                        </a>
+                        <a href="#" className="btn btn-google btn-block mb-4">
+                            <i className="fab fa-google"></i> Sign in with Google
+                        </a>
+                        <Form.Group className="form-group">
+                            <Form.Control
+                                type="email"
+                                placeholder="Username"
+                                className="form-control"
+                                onChange={(e) => _setFormData({ ...formData, email: e.target.value })}
+                            />
+                        </Form.Group>
+                        <Form.Group className="form-group">
+                            <Form.Control
+                                type="password"
+                                placeholder="Password"
+                                className="form-control"
+                                onChange={(e) => _setFormData({ ...formData, password: e.target.value })}
+                            />
+                        </Form.Group>
 
-                    <Form.Group controlId="formBasicEmail">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="Enter email" />
-                    </Form.Group>
-
-                    <Form.Group controlId="formBasicPassword">
-                        <Form.Label>Password</Form.Label>
-                        <Form.Control type="password" placeholder="Password" />
-                    </Form.Group>
-
-                    <Form.Group controlId="formBasicCheckbox">
-                        <Form.Check type="checkbox" label="Remember me!" />
-                    </Form.Group>
-
-                    <Button variant="primary" type="submit">
-                        Login
-                    </Button>
-                    <p className="forgot-password text-right">
-                        Forgot <a href="#">password?</a>
-                    </p>
-                </Form>
+                        <Form.Group className="form-group">
+                            <a href="#" className="float-right">
+                                Forgot password?
+                            </a>
+                            <div className="float-left custom-control custom-checkbox">
+                                <Form.Control type="checkbox" className="custom-control-input" />
+                                <Form.Label className="custom-control-label">Remember</Form.Label>
+                            </div>
+                        </Form.Group>
+                        <Form.Group className="form-group">
+                            <button type="submit" className="btn btn-primary btn-block">
+                                Login
+                            </button>
+                        </Form.Group>
+                    </Form>
+                </div>
             </div>
-        </div>
+
+            <p className="text-center mt-4">
+                Don't have account? <Link to="/register">Sign up</Link>
+            </p>
+            <br />
+            <br />
+        </section>
     );
 };
 

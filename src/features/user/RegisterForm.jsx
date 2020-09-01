@@ -1,44 +1,74 @@
-import React from 'react'
-import { Form } from 'react-bootstrap'
-import { Button } from 'react-bootstrap'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Form } from 'react-bootstrap';
 
 const RegisterForm = () => {
     return (
-        <div className="section">
-            <div className="container">
-            <Form>
-                <h3 class="my-3">Sign Up</h3>
-
-                <Form.Group controlId="formBasicFirstName">
-                    <Form.Label>First Name</Form.Label>
-                    <Form.Control type="text" placeholder="First Name" />
-                </Form.Group>
-
-                <Form.Group controlId="formBasicLastName">
-                    <Form.Label>Last Name</Form.Label>
-                    <Form.Control type="text" placeholder="Last Name" />
-                </Form.Group>
-
-                <Form.Group controlId="formBasicEmail">
-                    <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
-                </Form.Group>
-
-                <Form.Group controlId="formBasicPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
-                </Form.Group>
-
-                <Button variant="primary" type="submit">
-                        Login
-                </Button>
-                <p className="forgot-password text-right">
-                    Already registered <a href="/login">sign in?</a>
-                </p>
-            </Form>
+        <section className="section-content padding-y">
+            <div className="card mx-auto" style={{ maxWidth: 520, marginTop: 40 }}>
+                <article className="card-body">
+                    <header className="mb-4">
+                        <h4 className="card-title">Sign up</h4>
+                    </header>
+                    <Form>
+                        <Form.Row className="form-row">
+                            <Form.Group className="col form-group">
+                                <Form.Label>First name</Form.Label>
+                                <Form.Control type="text" className="form-control" placeholder="" />
+                            </Form.Group>
+                            <Form.Group className="col form-group">
+                                <Form.Label>Last name</Form.Label>
+                                <Form.Control type="text" className="form-control" placeholder="" />
+                            </Form.Group>
+                        </Form.Row>
+                        <Form.Group className="form-group">
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control type="email" className="form-control" placeholder="" />
+                            <small className="form-text text-muted">
+                                We'll never share your email with anyone else.
+                            </small>
+                        </Form.Group>
+                        <Form.Group className="form-group">
+                            <Form.Label>Sign up as</Form.Label>
+                            <select id="userRole" className="form-control">
+                                <option>Choose...</option>
+                                <option>User</option>
+                                <option>Seller</option>
+                            </select>
+                        </Form.Group>
+                        <div className="form-row">
+                            <div className="form-group col-md-6">
+                                <label>Create password</label>
+                                <input className="form-control" type="password" />
+                            </div>
+                            <div className="form-group col-md-6">
+                                <label>Repeat password</label>
+                                <input className="form-control" type="password" />
+                            </div>
+                        </div>
+                        <div className="form-group">
+                            <button type="submit" className="btn btn-primary btn-block">
+                                Register
+                            </button>
+                        </div>
+                        <div className="form-group">
+                            <label className="custom-control custom-checkbox">
+                                <input type="checkbox" className="custom-control-input" />
+                                <div className="custom-control-label">
+                                    I am agree with <Link to="/">terms and contitions</Link>
+                                </div>
+                            </label>
+                        </div>
+                    </Form>
+                </article>
             </div>
-        </div>
+            <p className="text-center mt-4">
+                Have an account? <Link to="/login">Log In</Link>
+            </p>
+            <br />
+            <br />
+        </section>
     );
-}
+};
 
 export default RegisterForm;
