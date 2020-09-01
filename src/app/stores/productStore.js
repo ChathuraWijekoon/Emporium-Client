@@ -1,4 +1,4 @@
-import { observable, action, computed, runInAction, reaction, decorate } from 'mobx';
+import { observable, action, computed, runInAction, reaction, decorate, toJS } from 'mobx';
 import agent from '../api/agent';
 
 const LIMIT = 4;
@@ -75,6 +75,35 @@ class ProductStore {
             });
         }
     };
+
+    loadProduct = async (id) => {
+        let product = this.getProduct(id);
+        if (product) {
+            this.product = product;
+            return toJS(product);
+        } else {
+            this.loadingInitial = true;
+            try {
+                product = await agent.Products.details(id);
+                runInAction('getting activity', () => {
+                    //   setActivityProps(product, this.rootStore.userStore.user!);
+                    this.product = product.data;
+                    this.productRegistry.set(product._id, product);
+                    this.loadingInitial = false;
+                });
+                return product;
+            } catch (error) {
+                runInAction('get activity error', () => {
+                    this.loadingInitial = false;
+                });
+                console.log(error);
+            }
+        }
+    };
+
+    getProduct = (id) => {
+        return this.productRegistry.get(id);
+    };
 }
 
 decorate(ProductStore, {
@@ -94,6 +123,7 @@ decorate(ProductStore, {
     setPredicate: action,
     setPage: action,
     loadProducts: action,
+    loadProduct: action,
 });
 
 export default ProductStore;
