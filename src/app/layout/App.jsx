@@ -1,5 +1,5 @@
 // modules
-import React, { Fragment, useContext } from 'react';
+import React, { Fragment, useContext, useEffect } from 'react';
 import { Route, withRouter, Switch } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { ToastContainer } from 'react-toastify';
@@ -13,9 +13,22 @@ import HomePage from '../../features/home/HomePage';
 import LoginForm from '../../features/user/LoginForm';
 import RegisterForm from '../../features/user/RegisterForm';
 import ProductDetail from '../../features/product/ProductDetail';
+import LoadingComponent from './LoadingComponent';
 
 const App = ({ location }) => {
     const rootStore = useContext(RootStoreContext);
+    const { setAppLoaded, token, appLoaded } = rootStore.commonStore;
+    const { getUser } = rootStore.userStore;
+
+    useEffect(() => {
+        if (token) {
+            getUser().finally(() => setAppLoaded());
+        } else {
+            setAppLoaded();
+        }
+    }, [getUser, setAppLoaded, token]);
+
+    if (!appLoaded) return <LoadingComponent content="Loading app..." />;
 
     return (
         // <div className="container-fluid p-3 px-md-4">
