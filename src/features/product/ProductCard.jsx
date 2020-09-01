@@ -1,6 +1,6 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 // modules
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import ReactStars from 'react-rating-stars-component';
 
@@ -12,15 +12,15 @@ const uploadsUrl = process.env.REACT_APP_UPLOADS_URL;
 
 const ProductCard = ({ product }) => {
     return (
-        <div href="#" className="card card-product-grid">
-            <a href="#" className="img-wrap">
+        <div href={`/product/${product._id}`} className="card card-product-grid">
+            <Link to={`/product/${product._id}`} className="img-wrap">
                 {' '}
                 <img src={`${uploadsUrl}/${product.photo}`} alt="product" />{' '}
-            </a>
+            </Link>
             <figcaption className="info-wrap">
-                <a href="#" className="title">
+                <Link to={`/product/${product._id}`} className="title">
                     {product.name}
-                </a>
+                </Link>
 
                 <div className="rating-wrap row">
                     {product.averageRating && (
