@@ -129,25 +129,6 @@ const ProductDetail = ({ match, history }) => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="form-group col-md">
-                                    <label>Select size</label>
-                                    <div className="mt-1">
-                                        <label className="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" name="select_size" className="custom-control-input" />
-                                            <div className="custom-control-label">Small</div>
-                                        </label>
-
-                                        <label className="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" name="select_size" className="custom-control-input" />
-                                            <div className="custom-control-label">Medium</div>
-                                        </label>
-
-                                        <label className="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" name="select_size" className="custom-control-input" />
-                                            <div className="custom-control-label">Large</div>
-                                        </label>
-                                    </div>
-                                </div>
                             </div>
                         </form>
                         <button className="btn btn-primary font-weight-bold mr-2"> Buy now </button>
