@@ -57,6 +57,7 @@ const requests = {
 
 const Products = {
     list: (params) => axios.get('/products', { params: params }).then(responseBody),
+    details: (id) => requests.get(`/products/${id}`),
 };
 
 export default {
