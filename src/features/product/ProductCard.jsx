@@ -7,15 +7,15 @@ import ReactStars from 'react-rating-stars-component';
 // utils
 import { formatCurrency } from '../../app/common/util/util';
 
-// assets
-import imgShirt from '../../assets/images/products/shirt.jpg';
+// uploads url
+const uploadsUrl = process.env.REACT_APP_UPLOADS_URL;
 
 const ProductCard = ({ product }) => {
     return (
         <div href="#" className="card card-product-grid">
             <a href="#" className="img-wrap">
                 {' '}
-                <img src={imgShirt} alt="product" />{' '}
+                <img src={`${uploadsUrl}/${product.photo}`} alt="product" />{' '}
             </a>
             <figcaption className="info-wrap">
                 <a href="#" className="title">
