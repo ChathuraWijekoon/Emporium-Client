@@ -8,6 +8,8 @@ import { ToastContainer } from 'react-toastify';
 import { RootStoreContext } from '../stores/rootStore';
 
 // components
+import HomePage from '../../features/home/HomePage';
+import AdminPage from'../../features/admin/AdminPage';
 import NavBar from '../../features/nav/NavBar';
 import HomePage from '../../features/home/HomePage';
 import LoginForm from '../../features/user/LoginForm';
@@ -45,6 +47,7 @@ const App = ({ location }) => {
                                 <Route exact path="/login" component={LoginForm} />
                                 <Route exact path="/register" component={RegisterForm} />
                                 <Route exact path="/product/:id" component={ProductDetail} />
+                                <Route exact path="/admin" component={AdminPage} />
                             </Switch>
                         </div>
                     </Fragment>
