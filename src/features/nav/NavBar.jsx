@@ -49,6 +49,13 @@ const NavBar = () => {
                                 </Link>
                                  : null }
                             </li>
+                            <li className="nav-item">
+                                { isAdmin ? 
+                                    <Link to="/admin" className="nav-link">
+                                        Admin
+                                    </Link>
+                                 : null }
+                            </li>
                         </ul>
                         <ul className="navbar-nav">
                             <li className="nav-item">
