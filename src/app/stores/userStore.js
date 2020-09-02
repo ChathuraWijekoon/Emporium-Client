@@ -39,6 +39,17 @@ class UserStore {
         }
     };
 
+    social = async (values) => {
+        try {
+            const user = await agent.User.social(values);
+            this.rootStore.commonStore.setToken(user.token);
+            // this.rootStore.modalStore.closeModal();
+            history.push('/');
+        } catch (error) {
+            throw error;
+        }
+    };
+
     getUser = async () => {
         try {
             const user = await agent.User.current();
