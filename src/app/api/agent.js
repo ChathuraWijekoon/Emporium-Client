@@ -59,6 +59,7 @@ const User = {
     current: () => requests.get('/auth/me'),
     login: (user) => requests.post(`/auth/login`, user),
     register: (user) => requests.post(`/auth/register`, user),
+    social: (user) => requests.post(`/auth/social`, user),
 };
 
 const Products = {

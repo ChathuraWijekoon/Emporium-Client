@@ -4,18 +4,39 @@ import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Form } from 'react-bootstrap';
 import { toast } from 'react-toastify';
+import { GoogleLogin } from 'react-google-login';
 
 // state
 import { RootStoreContext } from '../../app/stores/rootStore';
 
 const LoginForm = () => {
     const rootStore = useContext(RootStoreContext);
-    const { login } = rootStore.userStore;
+    const { login, social } = rootStore.userStore;
 
     const [formData, _setFormData] = useState({
         email: '',
         password: '',
     });
+
+    const handleSocialLoginSuccess = (response) => {
+        const reqObject = {
+            name: response.profileObj.name,
+            email: response.profileObj.email,
+            provider: 'GOOGLE',
+            providerId: response.profileObj.googleId,
+            password: response.tokenId,
+        };
+
+        social(reqObject).catch((error) => {
+            if (error.data) {
+                toast.error(error.data.error);
+            }
+        });
+    };
+
+    const handleSocialLoginFailure = (response) => {
+        toast.error('Unable to perform the SSO');
+    };
 
     return (
         <section className="section-content padding-y" style={{ minHeight: '84vh' }}>
@@ -32,12 +53,18 @@ const LoginForm = () => {
                             });
                         }}
                     >
-                        <a href="#" className="btn btn-facebook btn-block mb-2">
-                            <i className="fab fa-facebook-f"></i> Sign in with Facebook
-                        </a>
-                        <a href="#" className="btn btn-google btn-block mb-4">
-                            <i className="fab fa-google"></i> Sign in with Google
-                        </a>
+                        <GoogleLogin
+                            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                            buttonText="Sign in with Google"
+                            render={(renderProps) => (
+                                <button className="btn btn-google btn-block mb-4" onClick={renderProps.onClick}>
+                                    <i className="fab fa-google"></i> Sign in with Google
+                                </button>
+                            )}
+                            onSuccess={handleSocialLoginSuccess}
+                            onFailure={handleSocialLoginFailure}
+                            cookiePolicy={'single_host_origin'}
+                        />
                         <Form.Group className="form-group">
                             <Form.Control
                                 type="email"
