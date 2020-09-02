@@ -15,7 +15,7 @@ import imgLogo from '../../assets/images/logo/emporium-logo-resize.png';
 
 const NavBar = () => {
     const rootStore = useContext(RootStoreContext);
-    const { user, logout, isAdmin } = rootStore.userStore;
+    const { user, logout } = rootStore.userStore;
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -29,32 +29,24 @@ const NavBar = () => {
                     <div className="container">
                         <ul className="navbar-nav d-none d-md-flex mr-auto">
                             <li className="nav-item">
-                            { !isAdmin ? 
                                 <Link to="/" className="nav-link">
                                     Home
                                 </Link>
-                                : null }
-                            </li>                            
+                            </li>
                             <li className="nav-item">
-                            { !isAdmin ? 
                                 <Link to="/delivery" className="nav-link">
                                     Delivery
                                 </Link>
-                                 : null }
                             </li>
                             <li className="nav-item">
-                            { !isAdmin ? 
                                 <Link to="/payment" className="nav-link">
                                     Payment
                                 </Link>
-                                 : null }
                             </li>
                             <li className="nav-item">
-                                { isAdmin ? 
-                                    <Link to="/admin" className="nav-link">
-                                        Admin
-                                    </Link>
-                                 : null }
+                                <Link to="/admin" className="nav-link">
+                                    Admin
+                                </Link>
                             </li>
                         </ul>
                         <ul className="navbar-nav">

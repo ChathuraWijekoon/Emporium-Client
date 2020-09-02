@@ -8,7 +8,6 @@ class UserStore {
         this.rootStore = rootStore;
     }
 
-    isAdmin = false;
     user = null;
 
     get isLoggedIn() {
@@ -18,17 +17,10 @@ class UserStore {
     login = async (values) => {
         try {
             const user = await agent.User.login(values);
-            if (user.success) {
-                runInAction(() => {
-                    this.user = user;
-                });
-                this.rootStore.commonStore.setToken(user.token);
-                const userProfile = await agent.User.current();
-                if(userProfile.success && userProfile.data.role === "admin") {
-                    this.isAdmin = true;
-                }
-            }
-           
+            runInAction(() => {
+                this.user = user;
+            });
+            this.rootStore.commonStore.setToken(user.token);
             // this.rootStore.modalStore.closeModal();
             history.push('/');
         } catch (error) {

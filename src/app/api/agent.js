@@ -3,7 +3,6 @@ import { history } from '../..';
 import { toast } from 'react-toastify';
 
 axios.defaults.baseURL = process.env.REACT_APP_BASE_URL;
-// axios.defaults.baseURL = 'http://localhost:5000/api/v1';
 
 axios.interceptors.request.use(
     (config) => {
