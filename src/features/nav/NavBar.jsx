@@ -2,6 +2,7 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
+import { useLocation } from 'react-router-dom';
 
 // state
 import { RootStoreContext } from '../../app/stores/rootStore';
@@ -13,9 +14,11 @@ import NavBarCategory from './NavBarCategory';
 // assets
 import imgLogo from '../../assets/images/logo/emporium-logo-resize.png';
 
-const NavBar = () => {
+const NavBar = (props) => {
     const rootStore = useContext(RootStoreContext);
     const { user, logout } = rootStore.userStore;
+
+    const location = useLocation();
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
@@ -43,11 +46,13 @@ const NavBar = () => {
                                     Payment
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <Link to="/admin" className="nav-link">
-                                    Admin
-                                </Link>
-                            </li>
+                            {user?.role === 'admin' && (
+                                <li className="nav-item">
+                                    <Link to="/admin" className="nav-link">
+                                        Admin
+                                    </Link>
+                                </li>
+                            )}
                         </ul>
                         <ul className="navbar-nav">
                             <li className="nav-item">
@@ -112,7 +117,8 @@ const NavBar = () => {
                     </div>
                 </section>
             </header>
-            <NavBarCategory />
+
+            {location.pathname !== '/admin' && <NavBarCategory />}
         </>
     );
 };
