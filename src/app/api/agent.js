@@ -67,7 +67,15 @@ const Products = {
     details: (id) => requests.get(`/products/${id}`),
 };
 
+const Admin = {
+    listProducts: (params) => axios.get('/admin/products', { params: params }).then(responseBody),
+    detailsProduct: (id) => requests.get(`/admin/products/${id}`),
+    listUsers: (params) => axios.get('/users', { params: params }).then(responseBody),
+    detailsUser: (id) => requests.get(`/users/${id}`),
+};
+
 export default {
     User,
     Products,
+    Admin,
 };
