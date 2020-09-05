@@ -43,6 +43,18 @@ const LoginForm = () => {
             <div className="card mx-auto" style={{ maxWidth: 380, marginTop: 50 }}>
                 <div className="card-body">
                     <h4 className="card-title mb-4">Sign in</h4>
+                    <GoogleLogin
+                        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                        buttonText="Sign in with Google"
+                        render={(renderProps) => (
+                            <button className="btn btn-google btn-block mb-4" onClick={renderProps.onClick}>
+                                <i className="fab fa-google"></i> Sign in with Google
+                            </button>
+                        )}
+                        onSuccess={handleSocialLoginSuccess}
+                        onFailure={handleSocialLoginFailure}
+                        cookiePolicy={'single_host_origin'}
+                    />
                     <Form
                         onSubmit={(e) => {
                             e.preventDefault();
@@ -53,18 +65,6 @@ const LoginForm = () => {
                             });
                         }}
                     >
-                        <GoogleLogin
-                            clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                            buttonText="Sign in with Google"
-                            render={(renderProps) => (
-                                <button className="btn btn-google btn-block mb-4" onClick={renderProps.onClick}>
-                                    <i className="fab fa-google"></i> Sign in with Google
-                                </button>
-                            )}
-                            onSuccess={handleSocialLoginSuccess}
-                            onFailure={handleSocialLoginFailure}
-                            cookiePolicy={'single_host_origin'}
-                        />
                         <Form.Group className="form-group">
                             <Form.Control
                                 type="email"
