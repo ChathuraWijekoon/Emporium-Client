@@ -11,7 +11,6 @@ import { RootStoreContext } from '../stores/rootStore';
 import HomePage from '../../features/home/HomePage';
 import AdminPage from'../../features/admin/AdminPage';
 import NavBar from '../../features/nav/NavBar';
-import HomePage from '../../features/home/HomePage';
 import LoginForm from '../../features/user/LoginForm';
 import RegisterForm from '../../features/user/RegisterForm';
 import ProductDetail from '../../features/product/ProductDetail';
