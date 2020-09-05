@@ -9,12 +9,13 @@ import { RootStoreContext } from '../stores/rootStore';
 
 // components
 import HomePage from '../../features/home/HomePage';
-import AdminPage from'../../features/admin/AdminPage';
+import AdminPage from '../../features/admin/AdminPage';
 import NavBar from '../../features/nav/NavBar';
 import LoginForm from '../../features/user/LoginForm';
 import RegisterForm from '../../features/user/RegisterForm';
 import ProductDetail from '../../features/product/ProductDetail';
 import LoadingComponent from './LoadingComponent';
+import PrivateRoute from './PrivateRoute';
 
 const App = ({ location }) => {
     const rootStore = useContext(RootStoreContext);
@@ -46,7 +47,7 @@ const App = ({ location }) => {
                                 <Route exact path="/login" component={LoginForm} />
                                 <Route exact path="/register" component={RegisterForm} />
                                 <Route exact path="/product/:id" component={ProductDetail} />
-                                <Route exact path="/admin" component={AdminPage} />
+                                <PrivateRoute role="admin" exact path="/admin" component={AdminPage} />
                             </Switch>
                         </div>
                     </Fragment>

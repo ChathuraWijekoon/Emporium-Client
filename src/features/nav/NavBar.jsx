@@ -43,11 +43,13 @@ const NavBar = () => {
                                     Payment
                                 </Link>
                             </li>
-                            <li className="nav-item">
-                                <Link to="/admin" className="nav-link">
-                                    Admin
-                                </Link>
-                            </li>
+                            {user?.role === 'admin' && (
+                                <li className="nav-item">
+                                    <Link to="/admin" className="nav-link">
+                                        Admin
+                                    </Link>
+                                </li>
+                            )}
                         </ul>
                         <ul className="navbar-nav">
                             <li className="nav-item">
