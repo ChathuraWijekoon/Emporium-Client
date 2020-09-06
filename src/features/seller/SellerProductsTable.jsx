@@ -1,6 +1,6 @@
 // modules
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -9,15 +9,15 @@ import filterFactory, { textFilter, numberFilter } from 'react-bootstrap-table2-
 // store
 import { RootStoreContext } from '../../app/stores/rootStore';
 
-const AdminProductsTable = () => {
+const SellerProductsTable = () => {
     const rootStore = useContext(RootStoreContext);
-    const { products } = rootStore.adminStore;
+    const { products } = rootStore.productStore;
 
     const history = useHistory();
 
     const rowEvents = {
         onClick: (e, row, rowIndex) => {
-            history.push({ pathname: `/admin/product/${row._id}` });
+            history.push({ pathname: `/sell/product/${row._id}` });
         },
     };
 
@@ -55,6 +55,11 @@ const AdminProductsTable = () => {
                 <div className="col">
                     <h4>Products </h4>
                 </div>
+                <div className="col">
+                    <Link to="/sell/product/new" className="btn btn-outline-primary float-right font-weight-bold">
+                        <i className="fas fa-plus"></i> Add
+                    </Link>
+                </div>
             </div>
             <div className="row mt-3">
                 <div className="col">
@@ -76,4 +81,4 @@ const AdminProductsTable = () => {
     );
 };
 
-export default observer(AdminProductsTable);
+export default observer(SellerProductsTable);

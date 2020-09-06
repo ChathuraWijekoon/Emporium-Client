@@ -1,5 +1,7 @@
 import { observable, action, computed, runInAction, reaction, decorate, toJS } from 'mobx';
+import { toast } from 'react-toastify';
 import agent from '../api/agent';
+import { history } from '../..';
 
 const LIMIT = 4;
 
@@ -66,6 +68,7 @@ class AdminStore {
         this.page = page;
     };
 
+    // products
     loadProducts = async () => {
         this.loadingInitial = true;
         try {
@@ -106,6 +109,65 @@ class AdminStore {
                     this.loadingInitial = false;
                 });
             }
+        }
+    };
+
+    editProduct = async (product) => {
+        this.submitting = true;
+        try {
+            await agent.Admin.updateProduct(product);
+            runInAction('editing product', () => {
+                this.productRegistry.set(product._id, product);
+                this.product = product;
+                this.submitting = false;
+            });
+            // history.push(`/admin/product/${product._id}`);
+            toast.success('Successfully updated product');
+        } catch (error) {
+            runInAction('edit product error', () => {
+                this.submitting = false;
+            });
+            toast.error(error.data.error);
+        }
+    };
+
+    uploadProductPhoto = async (product, file) => {
+        this.submitting = true;
+        try {
+            const response = await agent.Admin.uploadProductPhoto(product._id, file);
+            runInAction('uploading product photo', () => {
+                this.productRegistry.set(product._id, product);
+                this.product.photo = response.data;
+                this.submitting = false;
+            });
+            // history.push(`/admin/product/${product._id}`);
+            window.location.reload();
+            toast.success('Successfully uploaded product photo');
+        } catch (error) {
+            runInAction('uploading product photo error', () => {
+                this.submitting = false;
+            });
+            toast.error(error.data.error);
+            console.log(error);
+        }
+    };
+
+    deleteProduct = async (id) => {
+        this.submitting = true;
+        try {
+            await agent.Admin.deleteProduct(id);
+            runInAction('deleting product', () => {
+                this.productRegistry.delete(id);
+                this.submitting = false;
+            });
+            toast.success('Product deleted successfully');
+            history.push('/admin');
+        } catch (error) {
+            runInAction('delete product error', () => {
+                this.submitting = false;
+            });
+            console.log(error);
+            toast.error(error.data.error);
         }
     };
 
@@ -155,6 +217,9 @@ decorate(AdminStore, {
     setPage: action,
     loadProducts: action,
     loadProduct: action,
+    editProduct: action,
+    uploadProductPhoto: action,
+    deleteProduct: action,
     loadUsers: action,
 });
 

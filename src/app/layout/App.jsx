@@ -14,6 +14,9 @@ import NavBar from '../../features/nav/NavBar';
 import LoginForm from '../../features/user/LoginForm';
 import RegisterForm from '../../features/user/RegisterForm';
 import ProductDetail from '../../features/product/ProductDetail';
+import AdminProductDetail from '../../features/admin/AdminProductDetail';
+import SellerPage from '../../features/seller/SellerPage';
+import SellerProductDetail from '../../features/seller/SellerProductDetail';
 import LoadingComponent from './LoadingComponent';
 import PrivateRoute from './PrivateRoute';
 
@@ -48,6 +51,19 @@ const App = ({ location }) => {
                                 <Route exact path="/register" component={RegisterForm} />
                                 <Route exact path="/product/:id" component={ProductDetail} />
                                 <PrivateRoute role="admin" exact path="/admin" component={AdminPage} />
+                                <PrivateRoute
+                                    role="admin"
+                                    exact
+                                    path="/admin/product/:id"
+                                    component={AdminProductDetail}
+                                />
+                                <PrivateRoute role="seller" exact path="/sell" component={SellerPage} />
+                                <PrivateRoute
+                                    role="seller"
+                                    exact
+                                    path="/sell/product/:id"
+                                    component={SellerProductDetail}
+                                />
                             </Switch>
                         </div>
                     </Fragment>

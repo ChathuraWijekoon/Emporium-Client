@@ -53,6 +53,13 @@ const NavBar = (props) => {
                                     </Link>
                                 </li>
                             )}
+                            {user?.role === 'seller' && (
+                                <li className="nav-item">
+                                    <Link to="/sell" className="nav-link">
+                                        Sell
+                                    </Link>
+                                </li>
+                            )}
                         </ul>
                         <ul className="navbar-nav">
                             <li className="nav-item">
@@ -118,7 +125,7 @@ const NavBar = (props) => {
                 </section>
             </header>
 
-            {location.pathname !== '/admin' && <NavBarCategory />}
+            {!location.pathname.includes('/admin') || (!location.pathname.includes('/seller') && <NavBarCategory />)}
         </>
     );
 };
