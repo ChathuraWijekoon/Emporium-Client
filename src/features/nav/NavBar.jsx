@@ -118,7 +118,7 @@ const NavBar = (props) => {
                 </section>
             </header>
 
-            {location.pathname !== '/admin' && <NavBarCategory />}
+            {!location.pathname.includes('/admin') && <NavBarCategory />}
         </>
     );
 };
