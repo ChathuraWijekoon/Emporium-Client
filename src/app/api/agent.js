@@ -74,6 +74,9 @@ const User = {
 const Products = {
     list: (params) => axios.get('/products', { params: params }).then(responseBody),
     details: (id) => requests.get(`/products/${id}`),
+    create: (product, categoryId) => requests.post(`/categories/${categoryId}/products`, product),
+    update: (product) => requests.put(`/products/${product._id}`, product),
+    uploadPhoto: (id, photo) => requests.putForm(`/products/${id}/photo`, photo),
 };
 
 const Admin = {
