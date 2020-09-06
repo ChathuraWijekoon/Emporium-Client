@@ -152,6 +152,25 @@ class AdminStore {
         }
     };
 
+    deleteProduct = async (id) => {
+        this.submitting = true;
+        try {
+            await agent.Admin.deleteProduct(id);
+            runInAction('deleting product', () => {
+                this.productRegistry.delete(id);
+                this.submitting = false;
+            });
+            toast.success('Product deleted successfully');
+            history.push('/admin');
+        } catch (error) {
+            runInAction('delete product error', () => {
+                this.submitting = false;
+            });
+            console.log(error);
+            toast.error(error.data.error);
+        }
+    };
+
     getProduct = (id) => {
         return this.productRegistry.get(id);
     };
@@ -200,6 +219,7 @@ decorate(AdminStore, {
     loadProduct: action,
     editProduct: action,
     uploadProductPhoto: action,
+    deleteProduct: action,
     loadUsers: action,
 });
 
