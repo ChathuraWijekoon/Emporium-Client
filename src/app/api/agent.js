@@ -81,6 +81,7 @@ const Admin = {
     detailsProduct: (id) => requests.get(`/admin/products/${id}`),
     updateProduct: (product) => requests.put(`/admin/products/${product._id}`, product),
     uploadProductPhoto: (id, photo) => requests.putForm(`/admin/products/${id}/photo`, photo),
+    deleteProduct: (id: string) => requests.del(`/admin/products/${id}`),
     listUsers: (params) => axios.get('/users', { params: params }).then(responseBody),
     detailsUser: (id) => requests.get(`/users/${id}`),
 };
