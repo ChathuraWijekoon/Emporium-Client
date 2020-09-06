@@ -13,7 +13,14 @@ const uploadsUrl = process.env.REACT_APP_UPLOADS_URL;
 
 const AdminProductDetail = ({ match, history }) => {
     const rootStore = useContext(RootStoreContext);
-    const { product, loadProduct, loadingInitial, editProduct, uploadProductPhoto } = rootStore.adminStore;
+    const {
+        product,
+        loadProduct,
+        loadingInitial,
+        editProduct,
+        uploadProductPhoto,
+        deleteProduct,
+    } = rootStore.adminStore;
     const { loadCategories, categories } = rootStore.categoryStore;
 
     const [formData, _setFormData] = useState({
@@ -65,6 +72,10 @@ const AdminProductDetail = ({ match, history }) => {
         if (e.target.files[0]) {
             uploadProductPhoto(product, e.target.files[0]);
         }
+    };
+
+    const handleDeleteClick = () => {
+        deleteProduct(product._id);
     };
 
     if (loadingInitial) return <LoadingComponent content="Loading product..." />;
@@ -158,7 +169,7 @@ const AdminProductDetail = ({ match, history }) => {
                                 <button className="btn btn-primary btn-block" type="submit">
                                     Save
                                 </button>
-                                <button className="btn btn-danger btn-block" type="button">
+                                <button className="btn btn-danger btn-block" type="button" onClick={handleDeleteClick}>
                                     Delete
                                 </button>
                             </form>
