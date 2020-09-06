@@ -1,5 +1,6 @@
 // modules
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -12,9 +13,11 @@ const AdminProductsTable = () => {
     const rootStore = useContext(RootStoreContext);
     const { products } = rootStore.adminStore;
 
+    const history = useHistory();
+
     const rowEvents = {
         onClick: (e, row, rowIndex) => {
-            console.log(row._id);
+            history.push({ pathname: `/admin/product/${row._id}` });
         },
     };
 
