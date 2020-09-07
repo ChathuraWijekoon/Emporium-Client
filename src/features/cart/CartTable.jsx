@@ -18,6 +18,7 @@ const uploadsUrl = process.env.REACT_APP_UPLOADS_URL;
 const CartTable = () => {
     const rootStore = useContext(RootStoreContext);
     const { cart } = rootStore.cartStore;
+    const { user } = rootStore.userStore;
 
     const [total, _setTotal] = useState({
         discount: 0,
@@ -36,6 +37,46 @@ const CartTable = () => {
             });
         }
     }, [cart]);
+
+    useEffect(() => {
+        if (window) {
+            window.payhere.onCompleted = () => {
+                console.log('Success');
+            }
+            
+            window.payhere.onDismissed = () => {
+                console.log('Dismissed');
+            }            
+            
+            window.payhere.onError = () => {
+                console.log('Error');
+            }            
+        }
+    }, [])
+
+    const handlePaymentClick = () => {
+        const payment = {
+            sandbox: true,
+            merchant_id: process.env.REACT_APP_PAYHERE_MERCHANT_ID,    
+            return_url: "http://localhost:3000",     
+            cancel_url: "http://localhost:3000",     
+            notify_url: "http://localhost:5000/notify",
+            order_id: `order_${cart._id}`,
+            items: cart._id,
+            amount: parseFloat(total.total).toFixed(2),
+            currency: "LKR",
+            email: user.email,
+            first_name: user.name,
+            last_name: user.name,
+            phone: '0715520912',
+		    address: 'No.1, Galle Road',
+		    city: 'Colombo',
+		    country: 'Sri Lanka',
+        };
+
+        window.payhere.startPayment(JSON.parse(JSON.stringify(payment)));
+
+    }
 
     return (
         <section className="section-content padding-y">
@@ -125,10 +166,10 @@ const CartTable = () => {
                             </table>
 
                             <div className="card-body border-top">
-                                <a href="#" className="btn btn-primary float-md-right">
+                                <button type="button" className="btn btn-primary float-md-right" onClick={handlePaymentClick}>
                                     {' '}
                                     Make Purchase <i className="fa fa-chevron-right"></i>{' '}
-                                </a>
+                                </button>
                                 <a href="#" className="btn btn-light">
                                     {' '}
                                     <i className="fa fa-chevron-left"></i> Continue shopping{' '}
