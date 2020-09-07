@@ -17,6 +17,7 @@ import ProductDetail from '../../features/product/ProductDetail';
 import AdminProductDetail from '../../features/admin/AdminProductDetail';
 import SellerPage from '../../features/seller/SellerPage';
 import SellerProductDetail from '../../features/seller/SellerProductDetail';
+import CartPage from '../../features/cart/CartPage';
 import LoadingComponent from './LoadingComponent';
 import PrivateRoute from './PrivateRoute';
 
@@ -64,6 +65,7 @@ const App = ({ location }) => {
                                     path="/sell/product/:id"
                                     component={SellerProductDetail}
                                 />
+                                <PrivateRoute role="user" exact path="/cart" component={CartPage} />
                             </Switch>
                         </div>
                     </Fragment>
