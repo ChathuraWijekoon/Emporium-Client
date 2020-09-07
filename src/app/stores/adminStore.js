@@ -245,7 +245,7 @@ class AdminStore {
     createProduct = async (categoryId, product) => {
         this.submitting = true;
         try {
-            const response = await agent.Products.create(product, categoryId);
+            const response = await agent.Admin.createProduct(product, categoryId);
             runInAction('create product', () => {
                 this.productRegistry.set(response.data._id, response.data);
                 this.submitting = false;
