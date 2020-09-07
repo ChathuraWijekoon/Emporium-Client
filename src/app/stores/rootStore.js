@@ -5,6 +5,7 @@ import CommonStore from './commonStore';
 import ProductStore from './productStore';
 import AdminStore from './adminStore';
 import CategoryStore from './categoryStore';
+import CartStore from './cartStore';
 
 configure({ enforceActions: 'observed' });
 
@@ -14,6 +15,7 @@ export class RootStore {
     productStore: ProductStore;
     adminStore: AdminStore;
     categoryStore: CategoryStore;
+    cartStore: CartStore;
 
     constructor() {
         this.userStore = new UserStore(this);
@@ -21,6 +23,7 @@ export class RootStore {
         this.productStore = new ProductStore(this);
         this.adminStore = new AdminStore(this);
         this.categoryStore = new CategoryStore(this);
+        this.cartStore = new CartStore(this);
     }
 }
 
