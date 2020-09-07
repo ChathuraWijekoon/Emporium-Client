@@ -1,6 +1,6 @@
 // modules
 import React, { useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -54,6 +54,11 @@ const AdminProductsTable = () => {
             <div className="row">
                 <div className="col">
                     <h4>Products </h4>
+                </div>
+                <div className="col">
+                    <Link to="/admin/product/new" className="btn btn-outline-primary float-right font-weight-bold">
+                        <i className="fas fa-plus"></i> Add
+                    </Link>
                 </div>
             </div>
             <div className="row mt-3">
