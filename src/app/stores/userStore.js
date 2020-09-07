@@ -56,6 +56,8 @@ class UserStore {
             runInAction(() => {
                 this.user = user.data;
             });
+            this.rootStore.cartStore.setPredicate('all', true);
+            this.rootStore.cartStore.loadCarts();
         } catch (error) {
             console.log(error);
         }
@@ -64,7 +66,8 @@ class UserStore {
     logout = () => {
         this.rootStore.commonStore.setToken(null);
         this.user = null;
-        history.push('/');
+        window.location.href = '/';
+        // history.push('/');
     };
 }
 
