@@ -17,6 +17,7 @@ import imgLogo from '../../assets/images/logo/emporium-logo-resize.png';
 const NavBar = (props) => {
     const rootStore = useContext(RootStoreContext);
     const { user, logout } = rootStore.userStore;
+    const { cart } = rootStore.cartStore;
 
     const location = useLocation();
 
@@ -86,10 +87,12 @@ const NavBar = (props) => {
                             <div className="col-lg-4 col-sm-6 col-12">
                                 <div className="widgets-wrap float-md-right">
                                     <div className="widget-header  mr-3">
-                                        <a role="button" className="icon icon-sm rounded-circle border">
+                                        <Link to="/cart" role="button" className="icon icon-sm rounded-circle border">
                                             <i className="fa fa-shopping-cart"></i>
-                                        </a>
-                                        <span className="badge badge-pill badge-danger notify">0</span>
+                                        </Link>
+                                        <span className="badge badge-pill badge-danger notify">
+                                            {cart ? cart.products.length : 0}
+                                        </span>
                                     </div>
                                     <div className="widget-header icontext">
                                         <a role="button" className="icon icon-sm rounded-circle border">
@@ -125,7 +128,7 @@ const NavBar = (props) => {
                 </section>
             </header>
 
-            {!location.pathname.includes('/admin') || (!location.pathname.includes('/seller') && <NavBarCategory />)}
+            {(!location.pathname.includes('/admin') || !location.pathname.includes('/seller')) && <NavBarCategory />}
         </>
     );
 };
