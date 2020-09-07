@@ -88,6 +88,7 @@ const Admin = {
     listUsers: (params) => axios.get('/users', { params: params }).then(responseBody),
     detailsUser: (id) => requests.get(`/users/${id}`),
     updateUser: (user) => requests.put(`/users/${user._id}`, user),
+    create: (product, categoryId) => requests.post(`/categories/${categoryId}/products`, product),
 };
 
 const Categories = {
