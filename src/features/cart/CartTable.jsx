@@ -10,7 +10,7 @@ import { RootStoreContext } from '../../app/stores/rootStore';
 import imgPayments from '../../assets/images/cart/payments.png';
 
 // utils
-import { formatCurrency } from '../../app/common/util/util';
+import { formatCurrency, convertCurrency } from '../../app/common/util/util';
 
 // uploads url
 const uploadsUrl = process.env.REACT_APP_UPLOADS_URL;
@@ -23,6 +23,7 @@ const CartTable = () => {
     const [total, _setTotal] = useState({
         discount: 0,
         total: 0,
+        currency: 'LKR'
     });
 
     useEffect(() => {
@@ -34,6 +35,7 @@ const CartTable = () => {
             _setTotal({
                 discount: 0,
                 total: sum,
+                currency: 'LKR'
             });
         }
     }, [cart]);
@@ -64,7 +66,7 @@ const CartTable = () => {
             order_id: `order_${cart._id}`,
             items: cart._id,
             amount: parseFloat(total.total).toFixed(2),
-            currency: "LKR",
+            currency: total.currency,
             email: user.email,
             first_name: user.name,
             last_name: user.name,
@@ -76,6 +78,12 @@ const CartTable = () => {
 
         window.payhere.startPayment(JSON.parse(JSON.stringify(payment)));
 
+    }
+
+    const handleConvertToUSDClick = async () => {
+        const usdAmount = await convertCurrency(total.total, total.currency);
+
+        _setTotal({...total, total: usdAmount, currency: (total.currency === 'LKR') ? 'USD' : 'LKR' })
     }
 
     return (
@@ -208,16 +216,17 @@ const CartTable = () => {
                             <div className="card-body">
                                 <dl className="dlist-align">
                                     <dt>Total price:</dt>
-                                    <dd className="text-right">{formatCurrency(total.total)}</dd>
+                                    <dd className="text-right">{formatCurrency(total.total, total.currency)}</dd>
                                 </dl>
                                 <dl className="dlist-align">
                                     <dt>Discount:</dt>
-                                    <dd className="text-right">{formatCurrency(total.discount)}</dd>
+                                    <dd className="text-right">{formatCurrency(total.discount, total.currency)}</dd>
                                 </dl>
                                 <dl className="dlist-align">
                                     <dt>Total:</dt>
                                     <dd className="text-right  h5">
-                                        <strong>{formatCurrency(total.total)}</strong>
+                                        <strong>{formatCurrency(total.total, total.currency)}</strong>
+                                                <button className="btn btn-outline-primary btn-sm" onClick={handleConvertToUSDClick}>{(total.currency === 'LKR') ? 'USD' : 'LKR'}</button>
                                     </dd>
                                 </dl>
                                 <hr />
