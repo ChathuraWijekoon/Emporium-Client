@@ -20,14 +20,46 @@ const uploadsUrl = process.env.REACT_APP_UPLOADS_URL;
 const ProductDetail = ({ match, history }) => {
     const rootStore = useContext(RootStoreContext);
     const { product, loadProduct, loadingInitial } = rootStore.productStore;
+    const { createCart, cart, editCart } = rootStore.cartStore;
 
     const [formData, _setFormData] = useState({
+        product: '',
         quantity: 1,
     });
 
     useEffect(() => {
         loadProduct(match.params.id);
     }, [loadProduct, match.params.id, history]);
+
+    useEffect(() => {
+        if (product) {
+            _setFormData({
+                product: product._id,
+                quantity: 1,
+            });
+        }
+    }, [product, match.params.id]);
+
+    const handleAddToCartClick = () => {
+        if (cart) {
+            const existingProducts = cart.products.map((p) => ({ product: p.product._id, quantity: p.quantity }));
+
+            existingProducts.forEach((p) => {
+                if (p.product === formData.product) {
+                    p.quantity = formData.quantity;
+                }
+            });
+
+            const productStatus = existingProducts.find((p) => p.product === formData.product);
+            const cartObj = {
+                ...cart,
+                products: productStatus ? [...existingProducts] : [...existingProducts, { ...formData }],
+            };
+            editCart(cartObj);
+        } else {
+            createCart({ products: [{ ...formData }] });
+        }
+    };
 
     if (loadingInitial) return <LoadingComponent content="Loading product..." />;
 
@@ -132,7 +164,7 @@ const ProductDetail = ({ match, history }) => {
                             </div>
                         </form>
                         <button className="btn btn-primary font-weight-bold mr-2"> Buy now </button>
-                        <button className="btn btn-outline-primary font-weight-bold">
+                        <button className="btn btn-outline-primary font-weight-bold" onClick={handleAddToCartClick}>
                             {' '}
                             <span className="text">Add to cart</span> <i className="fas fa-shopping-cart"></i>{' '}
                         </button>
