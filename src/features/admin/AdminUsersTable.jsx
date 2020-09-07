@@ -1,5 +1,6 @@
 // modules
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import BootstrapTable from 'react-bootstrap-table-next';
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -8,13 +9,15 @@ import filterFactory, { textFilter, selectFilter } from 'react-bootstrap-table2-
 // store
 import { RootStoreContext } from '../../app/stores/rootStore';
 
-const AdminProductsTable = () => {
+const AdminUsersTable = () => {
     const rootStore = useContext(RootStoreContext);
     const { users } = rootStore.adminStore;
 
+    const history = useHistory();
+
     const rowEvents = {
         onClick: (e, row, rowIndex) => {
-            console.log(row._id);
+            history.push({ pathname: `/users/${row._id}` });
         },
     };
 
@@ -71,4 +74,4 @@ const AdminProductsTable = () => {
     );
 };
 
-export default observer(AdminProductsTable);
+export default observer(AdminUsersTable);

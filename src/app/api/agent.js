@@ -87,6 +87,7 @@ const Admin = {
     deleteProduct: (id: string) => requests.del(`/admin/products/${id}`),
     listUsers: (params) => axios.get('/users', { params: params }).then(responseBody),
     detailsUser: (id) => requests.get(`/users/${id}`),
+    updateUser: (user) => requests.put(`/users/${user._id}`, user),
 };
 
 const Categories = {

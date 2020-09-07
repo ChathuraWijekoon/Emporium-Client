@@ -15,6 +15,7 @@ import LoginForm from '../../features/user/LoginForm';
 import RegisterForm from '../../features/user/RegisterForm';
 import ProductDetail from '../../features/product/ProductDetail';
 import AdminProductDetail from '../../features/admin/AdminProductDetail';
+import AdminUserDetail from '../../features/admin/AdminUserDetail';
 import SellerPage from '../../features/seller/SellerPage';
 import SellerProductDetail from '../../features/seller/SellerProductDetail';
 import CartPage from '../../features/cart/CartPage';
@@ -57,6 +58,12 @@ const App = ({ location }) => {
                                     exact
                                     path="/admin/product/:id"
                                     component={AdminProductDetail}
+                                />
+                                <PrivateRoute
+                                    role="admin"
+                                    exact
+                                    path="/users/:id"
+                                    component={AdminUserDetail}
                                 />
                                 <PrivateRoute role="seller" exact path="/sell" component={SellerPage} />
                                 <PrivateRoute

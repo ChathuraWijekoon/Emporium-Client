@@ -175,6 +175,10 @@ class AdminStore {
         return this.productRegistry.get(id);
     };
 
+    getUser = (id) => {
+        return this.userRegistry.get(id);
+    };
+
     // Users
     loadUsers = async () => {
         this.loadingInitial = true;
@@ -192,6 +196,49 @@ class AdminStore {
             runInAction('load users error', () => {
                 this.loadingInitial = false;
             });
+        }
+    };
+
+    loadUser = async (id) => {
+        let user = this.getUser(id);
+        if (user) {
+            this.user = user;
+            return toJS(user);
+        } else {
+            this.loadingInitial = true;
+            try {
+                user = await agent.Admin.detailsUser(id);
+                runInAction('getting activity', () => {
+                    //   setActivityProps(product, this.rootStore.userStore.user!);
+                    this.user = user.data;
+                    this.userRegistry.set(user._id, user);
+                    this.loadingInitial = false;
+                });
+                return user;
+            } catch (error) {
+                runInAction('get activity error', () => {
+                    this.loadingInitial = false;
+                });
+            }
+        }
+    };
+
+    editUser = async (user) => {
+        this.submitting = true;
+        try {
+            await agent.Admin.updateUser(user);
+            runInAction('editing user', () => {
+                this.userRegistry.set(user._id, user);
+                this.user = user;
+                this.submitting = false;
+            });
+            // history.push(`/admin/product/${product._id}`);
+            toast.success('Successfully updated product');
+        } catch (error) {
+            runInAction('edit product error', () => {
+                this.submitting = false;
+            });
+            toast.error(error.data.error);
         }
     };
 }
@@ -221,6 +268,8 @@ decorate(AdminStore, {
     uploadProductPhoto: action,
     deleteProduct: action,
     loadUsers: action,
+    loadUser: action,
+    editUser: action,
 });
 
 export default AdminStore;
