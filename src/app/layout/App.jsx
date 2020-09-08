@@ -21,6 +21,8 @@ import SellerProductDetail from '../../features/seller/SellerProductDetail';
 import CartPage from '../../features/cart/CartPage';
 import LoadingComponent from './LoadingComponent';
 import PrivateRoute from './PrivateRoute';
+import DeliveryPage from '../../features/delivery/deliveryPage';
+import PaymentPage from '../../features/payment/PaymentPage';
 
 const App = ({ location }) => {
     const rootStore = useContext(RootStoreContext);
@@ -52,6 +54,8 @@ const App = ({ location }) => {
                                 <Route exact path="/login" component={LoginForm} />
                                 <Route exact path="/register" component={RegisterForm} />
                                 <Route exact path="/product/:id" component={ProductDetail} />
+                                <Route exact path="/delivery" component={DeliveryPage} />
+                                <Route exact path="/payment" component={PaymentPage} />
                                 <PrivateRoute role="admin" exact path="/admin" component={AdminPage} />
                                 <PrivateRoute
                                     role="admin"
