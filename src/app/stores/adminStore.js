@@ -233,12 +233,30 @@ class AdminStore {
                 this.submitting = false;
             });
             // history.push(`/admin/product/${product._id}`);
-            toast.success('Successfully updated product');
+            toast.success('Successfully updated user');
         } catch (error) {
-            runInAction('edit product error', () => {
+            runInAction('edit user error', () => {
                 this.submitting = false;
             });
             toast.error(error.data.error);
+        }
+    };
+
+    createProduct = async (categoryId, product) => {
+        this.submitting = true;
+        try {
+            const response = await agent.Admin.createProduct(product, categoryId);
+            runInAction('create product', () => {
+                this.productRegistry.set(response.data._id, response.data);
+                this.submitting = false;
+            });
+            history.push(`/admin/product/${response.data._id}`);
+        } catch (error) {
+            runInAction('create product error', () => {
+                this.submitting = false;
+            });
+            toast.error(error.data?.error);
+            console.log(error.response);
         }
     };
 }
@@ -265,6 +283,7 @@ decorate(AdminStore, {
     loadProducts: action,
     loadProduct: action,
     editProduct: action,
+    createProduct: action,
     uploadProductPhoto: action,
     deleteProduct: action,
     loadUsers: action,

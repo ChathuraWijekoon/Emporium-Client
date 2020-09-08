@@ -17,12 +17,14 @@ const AdminProductDetail = ({ match, history }) => {
         product,
         loadProduct,
         loadingInitial,
+        createProduct,
         editProduct,
         uploadProductPhoto,
         deleteProduct,
     } = rootStore.adminStore;
     const { loadCategories, categories } = rootStore.categoryStore;
-
+    
+    const [newProduct, _setNewProduct] = useState(false);
     const [formData, _setFormData] = useState({
         _id: match.params.id,
         name: '',
@@ -37,7 +39,11 @@ const AdminProductDetail = ({ match, history }) => {
     });
 
     useEffect(() => {
-        loadProduct(match.params.id);
+        if (match.params.id !== 'new') {
+            loadProduct(match.params.id);
+        } else {
+            _setNewProduct(true);
+        }
     }, [loadProduct, match.params.id, history]);
 
     useEffect(() => {
@@ -63,7 +69,13 @@ const AdminProductDetail = ({ match, history }) => {
 
     const handleFormSubmit = (e) => {
         e.preventDefault();
-        editProduct(formData);
+
+        if (product) {
+            editProduct(formData);
+        } else {
+            delete formData._id;
+            createProduct(formData.category, formData);
+        }
     };
 
     const handleFileUpload = (e) => {
@@ -80,7 +92,7 @@ const AdminProductDetail = ({ match, history }) => {
 
     if (loadingInitial) return <LoadingComponent content="Loading product..." />;
 
-    if (!product) return <h2>Product not found</h2>;
+    if (!product && !newProduct) return <h2>Product not found</h2>;
 
     return (
         <div className="container mt-3">
@@ -88,7 +100,7 @@ const AdminProductDetail = ({ match, history }) => {
                 <aside className="col-md-12">
                     <div className="card">
                         <div className="card-body">
-                            <h4 className="card-title mb-4">Product Details - {product.name}</h4>
+                            <h4 className="card-title mb-4">{newProduct ? 'Add Product' : `Product Details - ${product.name}`}</h4>
                             <form onSubmit={handleFormSubmit}>
                                 <div className="form-row">
                                     <div className="col form-group">
@@ -158,6 +170,8 @@ const AdminProductDetail = ({ match, history }) => {
                                         />
                                     </div>
                                 </div>
+                                { product && (
+                                    <>
                                 <div className="form-group">
                                     <img src={`${uploadsUrl}/${product.photo}`} width={100} alt="product" />
                                 </div>
@@ -166,12 +180,14 @@ const AdminProductDetail = ({ match, history }) => {
                                         <input type="file" className="form-control-file" onChange={handleFileUpload} />
                                     </label>
                                 </div>
+                                </>
+                                )}
                                 <button className="btn btn-primary btn-block" type="submit">
                                     Save
                                 </button>
-                                <button className="btn btn-danger btn-block" type="button" onClick={handleDeleteClick}>
+                                {product && <button className="btn btn-danger btn-block" type="button" onClick={handleDeleteClick}>
                                     Delete
-                                </button>
+                                </button>}
                             </form>
                         </div>
                     </div>
