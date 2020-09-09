@@ -103,10 +103,16 @@ const Carts = {
     update: (cart) => requests.put(`/carts/${cart._id}`, cart),
 };
 
+const Orders = {
+    list: (params) => axios.get('/orders', { params: params }).then(responseBody),
+    details: (id) => requests.get(`/orders/${id}`),
+};
+
 export default {
     User,
     Products,
     Admin,
     Categories,
     Carts,
+    Orders,
 };

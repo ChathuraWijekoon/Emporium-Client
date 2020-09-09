@@ -8,6 +8,7 @@ import { RootStoreContext } from '../../app/stores/rootStore';
 const AdminCounts = ({ setActiveTable }) => {
     const rootStore = useContext(RootStoreContext);
     const { productCount, userCount } = rootStore.adminStore;
+    const { orderCount } = rootStore.orderStore;
 
     const [hover, _setHover] = useState('');
     const [activeCount, _setActiveCount] = useState('products');
@@ -80,7 +81,7 @@ const AdminCounts = ({ setActiveTable }) => {
                         </div>
                         <figcaption className="info">
                             <h5 className="title">Orders</h5>
-                            <p>12</p>
+                            <p>{orderCount}</p>
                         </figcaption>
                     </figure>
                 </article>
